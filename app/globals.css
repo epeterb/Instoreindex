@@ -1,0 +1,81 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+@layer base {
+  body {
+    @apply bg-navy-950 text-gray-100 antialiased;
+  }
+
+  h1, h2, h3, h4 {
+    @apply font-semibold text-white;
+  }
+
+  a {
+    @apply text-accent-light hover:text-accent transition-colors;
+  }
+}
+
+@layer components {
+  .prose-content h2 {
+    @apply text-xl font-semibold text-white mt-8 mb-3 pb-2 border-b border-navy-700;
+  }
+
+  .prose-content h3 {
+    @apply text-lg font-semibold text-gray-200 mt-6 mb-2;
+  }
+
+  .prose-content p {
+    @apply text-gray-300 leading-relaxed mb-4;
+  }
+
+  .prose-content ul, .prose-content ol {
+    @apply text-gray-300 mb-4 pl-6;
+  }
+
+  .prose-content ul {
+    @apply list-disc;
+  }
+
+  .prose-content ol {
+    @apply list-decimal;
+  }
+
+  .prose-content li {
+    @apply mb-2 leading-relaxed;
+  }
+
+  .prose-content strong {
+    @apply text-white font-semibold;
+  }
+
+  .prose-content table {
+    @apply w-full border-collapse mb-6 text-sm;
+  }
+
+  .prose-content thead {
+    @apply bg-navy-800;
+  }
+
+  .prose-content th {
+    @apply text-left text-white font-semibold px-4 py-3 border border-navy-700;
+  }
+
+  .prose-content td {
+    @apply text-gray-300 px-4 py-3 border border-navy-800;
+  }
+
+  .prose-content tr:nth-child(even) {
+    @apply bg-navy-900/50;
+  }
+
+  .prose-content blockquote {
+    @apply border-l-4 border-accent pl-4 my-4 text-gray-400 italic;
+  }
+
+  .prose-content code {
+    @apply bg-navy-800 text-accent-light px-1.5 py-0.5 rounded text-sm;
+  }
+}
