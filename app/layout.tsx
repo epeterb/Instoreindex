@@ -119,7 +119,13 @@ export default function RootLayout({
                 </ul>
               </div>
             </div>
-            <div className="border-t border-navy-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
+            <div className="border-t border-navy-800 pt-8 flex flex-col items-center gap-3">
+              <p className="text-sm text-gray-400">
+                Need help choosing a provider?{' '}
+                <a href="mailto:information@instoreindex.com" className="text-accent hover:text-blue-400 no-underline">
+                  information@instoreindex.com
+                </a>
+              </p>
               <p className="text-sm text-gray-600">
                 © 2026 InStoreIndex. Independent, vendor-neutral in-store media research.
               </p>
