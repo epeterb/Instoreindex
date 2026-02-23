@@ -1,0 +1,15 @@
+{
+  "redirects": [
+    {
+      "source": "/:path(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "www.instoreindex.com"
+        }
+      ],
+      "destination": "https://instoreindex.com/:path",
+      "permanent": true
+    }
+  ]
+}
