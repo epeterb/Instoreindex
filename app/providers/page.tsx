@@ -14,6 +14,8 @@ export default function ProvidersPage() {
   const profiles = getPagesByType(allPages, 'provider_profile');
   const alternatives = getPagesByType(allPages, 'alternatives');
   const pricing = getPagesByType(allPages, 'pricing');
+  const providerVerticals = getPagesByType(allPages, 'provider_vertical');
+  const providerServices = getPagesByType(allPages, 'provider_service');
 
   return (
     <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
@@ -47,7 +49,7 @@ export default function ProvidersPage() {
         <h2 className="text-xl font-bold text-white mb-2">Head-to-Head Comparisons</h2>
         <p className="text-gray-500 mb-6">{comparisons.length} provider comparisons</p>
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {comparisons.slice(0, 30).map((page) => (
+          {comparisons.map((page) => (
             <a key={page.slug} href={`/${page.slug}/`} className="block p-3 bg-navy-900 border border-navy-800 rounded-lg hover:border-accent/40 transition-colors no-underline group">
               <h3 className="text-sm text-white font-medium group-hover:text-accent-light transition-colors">
                 {page.h1.replace(': Which In-Store Media Provider Is Right for You?', '')}
@@ -55,9 +57,6 @@ export default function ProvidersPage() {
             </a>
           ))}
         </div>
-        {comparisons.length > 30 && (
-          <p className="text-sm text-gray-600 mt-4">Showing 30 of {comparisons.length} comparisons.</p>
-        )}
       </section>
 
       {/* Alternatives & Pricing */}
@@ -83,6 +82,32 @@ export default function ProvidersPage() {
           </div>
         </section>
       </div>
+
+      {/* Provider by Industry */}
+      <section className="mb-12 mt-12">
+        <h2 className="text-xl font-bold text-white mb-2">Providers by Industry</h2>
+        <p className="text-gray-500 mb-6">{providerVerticals.length} industry-specific provider guides</p>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {providerVerticals.map((page) => (
+            <a key={page.slug} href={`/${page.slug}/`} className="block p-3 bg-navy-900 border border-navy-800 rounded-lg hover:border-accent/40 transition-colors no-underline group">
+              <h3 className="text-sm text-white font-medium group-hover:text-accent-light">{page.h1}</h3>
+            </a>
+          ))}
+        </div>
+      </section>
+
+      {/* Provider Services */}
+      <section className="mb-12">
+        <h2 className="text-xl font-bold text-white mb-2">Provider Services</h2>
+        <p className="text-gray-500 mb-6">Detailed breakdowns of services offered by each provider.</p>
+        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
+          {providerServices.map((page) => (
+            <a key={page.slug} href={`/${page.slug}/`} className="block p-3 bg-navy-900 border border-navy-800 rounded-lg hover:border-accent/40 transition-colors no-underline group">
+              <h3 className="text-sm text-white font-medium group-hover:text-accent-light">{page.h1}</h3>
+            </a>
+          ))}
+        </div>
+      </section>
     </div>
   );
 }

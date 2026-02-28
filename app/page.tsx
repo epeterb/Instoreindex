@@ -32,7 +32,7 @@ export default function HomePage() {
             <a href="/complete-guide-digital-signage-retail/" className="px-6 py-3 bg-navy-800 hover:bg-navy-700 text-white font-medium rounded-lg transition-colors no-underline">
               Digital Signage Guide
             </a>
-            <a href="/complete-guide-retail-media-networks/" className="px-6 py-3 bg-navy-800 hover:bg-navy-700 text-white font-medium rounded-lg transition-colors no-underline">
+            <a href="/complete-guide-retail-media-networks-in-store/" className="px-6 py-3 bg-navy-800 hover:bg-navy-700 text-white font-medium rounded-lg transition-colors no-underline">
               Retail Media Guide
             </a>
           </div>

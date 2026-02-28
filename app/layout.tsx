@@ -98,14 +98,14 @@ export default function RootLayout({
                 <h4 className="text-sm font-semibold text-white mb-3">Digital Signage</h4>
                 <ul className="space-y-2 text-sm">
                   <li><a href="/complete-guide-digital-signage-retail/" className="text-gray-500 hover:text-gray-300 no-underline">Complete Guide</a></li>
-                  <li><a href="/top-digital-signage-companies-retail-2026/" className="text-gray-500 hover:text-gray-300 no-underline">Top Providers 2026</a></li>
+                  <li><a href="/top-digital-signage-companies-retail/" className="text-gray-500 hover:text-gray-300 no-underline">Top Providers 2026</a></li>
                   <li><a href="/how-much-does-digital-signage-cost-per-screen/" className="text-gray-500 hover:text-gray-300 no-underline">Cost Per Screen</a></li>
                 </ul>
               </div>
               <div>
                 <h4 className="text-sm font-semibold text-white mb-3">Retail Media</h4>
                 <ul className="space-y-2 text-sm">
-                  <li><a href="/complete-guide-retail-media-networks/" className="text-gray-500 hover:text-gray-300 no-underline">Complete Guide</a></li>
+                  <li><a href="/complete-guide-retail-media-networks-in-store/" className="text-gray-500 hover:text-gray-300 no-underline">Complete Guide</a></li>
                   <li><a href="/what-is-a-retail-media-network/" className="text-gray-500 hover:text-gray-300 no-underline">What is an RMN?</a></li>
                   <li><a href="/how-do-retail-media-networks-make-money/" className="text-gray-500 hover:text-gray-300 no-underline">How RMNs Make Money</a></li>
                 </ul>
@@ -119,13 +119,7 @@ export default function RootLayout({
                 </ul>
               </div>
             </div>
-            <div className="border-t border-navy-800 pt-8 flex flex-col items-center gap-3">
-              <p className="text-sm text-gray-400">
-                Need help choosing a provider?{' '}
-                <a href="mailto:information@instoreindex.com" className="text-accent hover:text-blue-400 no-underline">
-                  information@instoreindex.com
-                </a>
-              </p>
+            <div className="border-t border-navy-800 pt-8 flex flex-col sm:flex-row justify-between items-center gap-4">
               <p className="text-sm text-gray-600">
                 © 2026 InStoreIndex. Independent, vendor-neutral in-store media research.
               </p>
