@@ -36,7 +36,7 @@ function main() {
   }
 
   xml += '</urlset>\n';
-  writeFileSync('out/sitemap.xml', xml);
+  writeFileSync('public/sitemap.xml', xml);
   console.log(`Sitemap generated: ${hubPages.length + pages.length} URLs`);
 }
 

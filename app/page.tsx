@@ -1,4 +1,5 @@
 import { getAllPages, getAllProviders, getPagesByType } from "@/lib/data";
+import LeadForm from "./components/LeadForm";
 
 export default function HomePage() {
   const allPages = getAllPages();
@@ -136,6 +137,9 @@ export default function HomePage() {
           ))}
         </div>
       </section>
+
+      {/* Contact */}
+      <LeadForm />
     </>
   );
 }

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
+import LeadForm from "./components/LeadForm";
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://instoreindex.com'),
@@ -83,6 +84,7 @@ export default function RootLayout({
 
         {/* Footer */}
         <footer className="border-t border-navy-800 bg-navy-950 mt-16">
+          <LeadForm />
           <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8 mb-8">
               <div>
