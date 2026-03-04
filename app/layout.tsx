@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import LeadForm from "./components/LeadForm";
+import Search from "./components/Search";
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://instoreindex.com'),
@@ -72,6 +73,7 @@ export default function RootLayout({
                     {link.label}
                   </a>
                 ))}
+                <Search />
               </nav>
             </div>
           </div>
