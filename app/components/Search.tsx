@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect, useRef } from 'react';
-import Fuse from 'fuse.js';
+import Fuse, { FuseResult } from 'fuse.js';
 
 interface SearchItem {
   slug: string;
@@ -32,7 +32,7 @@ const typeLabels: Record<string, string> = {
 
 export default function Search() {
   const [query, setQuery] = useState('');
-  const [results, setResults] = useState<Fuse.FuseResult<SearchItem>[]>([]);
+  const [results, setResults] = useState<FuseResult<SearchItem>[]>([]);
   const [isOpen, setIsOpen] = useState(false);
   const [fuse, setFuse] = useState<Fuse<SearchItem> | null>(null);
   const wrapperRef = useRef<HTMLDivElement>(null);
