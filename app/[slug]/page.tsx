@@ -97,21 +97,60 @@ function markdownToHtml(md: string): string {
   return html;
 }
 
-function getBreadcrumb(page: Page) {
-  const pillarNames: Record<string, string> = {
-    music: 'Background Music', signage: 'Digital Signage', rmn: 'Retail Media Networks', general: 'In-Store Media',
+function getPillarHub(pillar: string): { name: string; url: string } {
+  const hubs: Record<string, { name: string; url: string }> = {
+    music: { name: 'Background Music', url: '/background-music/' },
+    signage: { name: 'Digital Signage', url: '/digital-signage/' },
+    rmn: { name: 'Retail Media Networks', url: '/retail-media-networks/' },
+    general: { name: 'Guides', url: '/guides/' },
   };
-  const typeNames: Record<string, string> = {
-    vs: 'Comparisons', comparison: 'Comparisons', vertical: 'Industry Solutions',
-    question: 'Buyer Questions', provider_profile: 'Providers', guide: 'Guides',
-    roundup: 'Best Of', alternatives: 'Alternatives', pricing: 'Pricing',
-    provider_vertical: 'Provider Solutions', provider_service: 'Provider Services',
-    city: 'By City', state_licensing: 'Licensing', glossary: 'Glossary',
-  };
-  return {
-    pillar: pillarNames[page.pillar] || 'In-Store Media',
-    type: typeNames[page.page_type] || 'Research',
-  };
+  return hubs[pillar] || { name: 'Guides', url: '/guides/' };
+}
+
+function getBreadcrumbTrail(page: Page): { name: string; url?: string }[] {
+  const pillarHub = getPillarHub(page.pillar);
+
+  // Route to correct parent hub based on page type
+  // Provider-centric pages → /providers/
+  // Pillar-specific content → pillar hub
+  // Guides → /guides/
+  // Glossary → /glossary/
+  switch (page.page_type) {
+    case 'vs':
+    case 'provider_profile':
+    case 'alternatives':
+    case 'pricing':
+    case 'provider_vertical':
+    case 'provider_service':
+      return [
+        { name: 'Home', url: 'https://instoreindex.com/' },
+        { name: 'Providers', url: 'https://instoreindex.com/providers/' },
+        { name: page.h1 },
+      ];
+    case 'guide':
+      return [
+        { name: 'Home', url: 'https://instoreindex.com/' },
+        { name: 'Guides', url: 'https://instoreindex.com/guides/' },
+        { name: page.h1 },
+      ];
+    case 'glossary':
+      return [
+        { name: 'Home', url: 'https://instoreindex.com/' },
+        { name: 'Glossary', url: 'https://instoreindex.com/glossary/' },
+        { name: page.h1 },
+      ];
+    case 'vertical':
+    case 'question':
+    case 'roundup':
+    case 'city':
+    case 'state_licensing':
+    default:
+      return [
+        { name: 'Home', url: 'https://instoreindex.com/' },
+        { name: pillarHub.name, url: `https://instoreindex.com${pillarHub.url}` },
+        { name: page.h1 },
+      ];
+  }
 }
 
 function PageTypeBadge({ type }: { type: string }) {
@@ -143,7 +182,7 @@ export default function SlugPage({ params }: { params: { slug: string } }) {
   if (!page) notFound();
 
   const relatedPages = getRelatedPages(page);
-  const breadcrumb = getBreadcrumb(page);
+  const breadcrumbTrail = getBreadcrumbTrail(page);
   const bodyHtml = markdownToHtml(page.body_content);
   const faqs = page.faq_questions || [];
 
@@ -160,13 +199,22 @@ export default function SlugPage({ params }: { params: { slug: string } }) {
   const breadcrumbSchema = {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
-    "itemListElement": [
-      { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://instoreindex.com/" },
-      { "@type": "ListItem", "position": 2, "name": breadcrumb.pillar,
-        "item": `https://instoreindex.com/${page.pillar === 'music' ? 'background-music' : page.pillar === 'signage' ? 'digital-signage' : page.pillar === 'rmn' ? 'retail-media-networks' : 'guides'}/` },
-      { "@type": "ListItem", "position": 3, "name": page.h1, "item": `https://instoreindex.com/${page.slug}/` },
-    ],
+    "itemListElement": breadcrumbTrail.map((crumb, idx) => {
+      const item: Record<string, unknown> = {
+        "@type": "ListItem",
+        "position": idx + 1,
+        "name": crumb.name,
+      };
+      // Per Google spec: last item doesn't need "item" URL
+      if (crumb.url) {
+        item["item"] = crumb.url;
+      }
+      return item;
+    }),
   };
+
+  // For visual breadcrumb, use the middle crumb(s) — everything between Home and the page itself
+  const middleCrumbs = breadcrumbTrail.slice(1, -1);
 
   return (
     <>
@@ -174,18 +222,26 @@ export default function SlugPage({ params }: { params: { slug: string } }) {
       {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
 
       <article className="max-w-4xl mx-auto px-4 sm:px-6 py-10">
-        <nav className="flex items-center gap-2 text-sm text-gray-600 mb-6">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-gray-600 mb-6">
           <a href="/" className="hover:text-gray-400 no-underline">Home</a>
+          {middleCrumbs.map((crumb, idx) => (
+            <span key={idx} className="flex items-center gap-2">
+              <span>/</span>
+              {crumb.url ? (
+                <a href={crumb.url.replace('https://instoreindex.com', '')} className="text-gray-500 hover:text-gray-400 no-underline">{crumb.name}</a>
+              ) : (
+                <span className="text-gray-500">{crumb.name}</span>
+              )}
+            </span>
+          ))}
           <span>/</span>
-          <span className="text-gray-500">{breadcrumb.pillar}</span>
-          <span>/</span>
-          <span className="text-gray-400">{breadcrumb.type}</span>
+          <span className="text-gray-400 truncate max-w-[200px]" title={page.h1}>{page.h1}</span>
         </nav>
 
         <header className="mb-8">
           <div className="flex items-center gap-3 mb-4">
             <PageTypeBadge type={page.page_type} />
-            <span className="text-xs text-gray-600 uppercase tracking-wide">{breadcrumb.pillar}</span>
+            <span className="text-xs text-gray-600 uppercase tracking-wide">{middleCrumbs[0]?.name || 'In-Store Media'}</span>
           </div>
           <h1 className="text-2xl sm:text-4xl font-bold text-white leading-tight mb-4">{page.h1}</h1>
           <div className="text-lg text-gray-300 leading-relaxed border-l-4 border-accent pl-5 py-1">{page.intro}</div>

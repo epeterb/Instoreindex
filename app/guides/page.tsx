@@ -15,8 +15,22 @@ export default function GuidesPage() {
   const generalVerticals = allPages.filter(p => p.pillar === 'general' && p.page_type === 'vertical');
 
   return (
-    <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
-      <h1 className="text-3xl font-bold text-white mb-2">Buyer&apos;s Guides</h1>
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "BreadcrumbList",
+        "itemListElement": [
+          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://instoreindex.com/" },
+          { "@type": "ListItem", "position": 2, "name": "Guides" }
+        ]
+      }) }} />
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-gray-600 mb-6">
+          <a href="/" className="hover:text-gray-400 no-underline">Home</a>
+          <span>/</span>
+          <span className="text-gray-400">Guides</span>
+        </nav>
+        <h1 className="text-3xl font-bold text-white mb-2">Buyer&apos;s Guides</h1>
       <p className="text-gray-400 mb-10">Comprehensive guides and best-of lists for in-store media decision makers.</p>
 
       <section className="mb-12">
@@ -73,5 +87,6 @@ export default function GuidesPage() {
         </section>
       )}
     </div>
+    </>
   );
 }
