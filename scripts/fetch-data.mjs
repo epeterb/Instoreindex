@@ -1,3 +1,5 @@
+// This script overwrites data/*.json from Supabase on every Vercel build.
+// Do NOT edit those JSON files directly — update Supabase instead.
 import { createClient } from '@supabase/supabase-js';
 import { writeFileSync, mkdirSync } from 'fs';
 
