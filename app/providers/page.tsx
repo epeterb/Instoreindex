@@ -17,6 +17,25 @@ export default function ProvidersPage() {
   const providerVerticals = getPagesByType(allPages, 'provider_vertical');
   const providerServices = getPagesByType(allPages, 'provider_service');
 
+  const allLinkedPages = [...profiles, ...comparisons, ...alternatives, ...pricing, ...providerVerticals, ...providerServices];
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'In-Store Media Providers',
+    url: 'https://instoreindex.com/providers/',
+    description: metadata.description,
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: allLinkedPages.length,
+      itemListElement: allLinkedPages.map((p, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: p.h1,
+        url: `https://instoreindex.com/${p.slug}/`,
+      })),
+    },
+  };
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -27,6 +46,7 @@ export default function ProvidersPage() {
           { "@type": "ListItem", "position": 2, "name": "Providers" }
         ]
       }) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-gray-600 mb-6">
           <a href="/" className="hover:text-gray-400 no-underline">Home</a>

@@ -18,6 +18,24 @@ export default function BackgroundMusicPage() {
   const licensing = musicPages.filter(p => p.page_type === 'state_licensing');
   const providerServices = musicPages.filter(p => p.page_type === 'provider_service');
 
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Background Music for Business',
+    url: 'https://instoreindex.com/background-music/',
+    description: metadata.description,
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: musicPages.length,
+      itemListElement: musicPages.map((p, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: p.h1,
+        url: `https://instoreindex.com/${p.slug}/`,
+      })),
+    },
+  };
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -28,6 +46,7 @@ export default function BackgroundMusicPage() {
           { "@type": "ListItem", "position": 2, "name": "Background Music" }
         ]
       }) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-gray-600 mb-6">
           <a href="/" className="hover:text-gray-400 no-underline">Home</a>

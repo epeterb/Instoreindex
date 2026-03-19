@@ -14,6 +14,25 @@ export default function GuidesPage() {
   const generalQuestions = allPages.filter(p => p.pillar === 'general' && p.page_type === 'question');
   const generalVerticals = allPages.filter(p => p.pillar === 'general' && p.page_type === 'vertical');
 
+  const allListedPages = [...guides, ...roundups, ...generalVerticals, ...generalQuestions];
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: "Buyer's Guides",
+    url: 'https://instoreindex.com/guides/',
+    description: metadata.description,
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: allListedPages.length,
+      itemListElement: allListedPages.map((p, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: p.h1,
+        url: `https://instoreindex.com/${p.slug}/`,
+      })),
+    },
+  };
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -24,6 +43,7 @@ export default function GuidesPage() {
           { "@type": "ListItem", "position": 2, "name": "Guides" }
         ]
       }) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-gray-600 mb-6">
           <a href="/" className="hover:text-gray-400 no-underline">Home</a>

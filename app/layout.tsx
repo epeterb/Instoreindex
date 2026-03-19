@@ -120,6 +120,7 @@ export default function RootLayout({
                   <li><a href="/providers/" className="text-gray-500 hover:text-gray-300 no-underline">All Providers</a></li>
                   <li><a href="/guides/" className="text-gray-500 hover:text-gray-300 no-underline">Buyer Guides</a></li>
                   <li><a href="/glossary/" className="text-gray-500 hover:text-gray-300 no-underline">Glossary</a></li>
+                  <li><a href="/about/" className="text-gray-500 hover:text-gray-300 no-underline">About</a></li>
                 </ul>
               </div>
             </div>

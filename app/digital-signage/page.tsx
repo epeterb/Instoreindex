@@ -16,6 +16,24 @@ export default function DigitalSignagePage() {
   const guides = pages.filter(p => p.page_type === 'guide' || p.page_type === 'roundup');
   const providerServices = pages.filter(p => p.page_type === 'provider_service');
 
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'Digital Signage for Business',
+    url: 'https://instoreindex.com/digital-signage/',
+    description: metadata.description,
+    mainEntity: {
+      '@type': 'ItemList',
+      numberOfItems: pages.length,
+      itemListElement: pages.map((p, i) => ({
+        '@type': 'ListItem',
+        position: i + 1,
+        name: p.h1,
+        url: `https://instoreindex.com/${p.slug}/`,
+      })),
+    },
+  };
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -26,6 +44,7 @@ export default function DigitalSignagePage() {
           { "@type": "ListItem", "position": 2, "name": "Digital Signage" }
         ]
       }) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-gray-600 mb-6">
           <a href="/" className="hover:text-gray-400 no-underline">Home</a>

@@ -1,5 +1,11 @@
 import { getAllPages, getAllProviders, getPagesByType } from "@/lib/data";
-import LeadForm from "./components/LeadForm";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  alternates: {
+    canonical: 'https://instoreindex.com/',
+  },
+};
 
 export default function HomePage() {
   const allPages = getAllPages();
@@ -11,8 +17,55 @@ export default function HomePage() {
   const verticals = getPagesByType(allPages, 'vertical').slice(0, 8);
   const roundups = getPagesByType(allPages, 'roundup').slice(0, 6);
 
+  const organizationSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    name: 'InStoreIndex',
+    url: 'https://instoreindex.com',
+    description: 'Vendor-neutral buyer\'s guide for in-store media including background music, digital signage, and retail media networks',
+    founder: {
+      '@type': 'Person',
+      name: 'Peter Belanger',
+      jobTitle: 'Founder',
+      url: 'https://instoreindex.com',
+    },
+    knowsAbout: [
+      'background music for business',
+      'digital signage for retail',
+      'retail media networks',
+      'in-store media',
+      'commercial music licensing',
+    ],
+  };
+
+  const webSiteSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'InStoreIndex',
+    url: 'https://instoreindex.com',
+  };
+
+  const collectionPageSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: 'The Buyer\'s Guide to Background Music, Digital Signage & Retail Media Networks',
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageSchema) }}
+      />
+
       {/* Hero */}
       <section className="py-16 sm:py-24 px-4 sm:px-6">
         <div className="max-w-4xl mx-auto text-center">
@@ -138,8 +191,6 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* Contact */}
-      <LeadForm />
     </>
   );
 }

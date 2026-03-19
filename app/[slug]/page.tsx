@@ -1,4 +1,4 @@
-import { getAllPages, getPageBySlug, getRelatedPages, type Page } from "@/lib/data";
+import { getAllPages, getAllProviders, getPageBySlug, getRelatedPages, type Page } from "@/lib/data";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -17,14 +17,19 @@ export function generateMetadata({
   const page = getPageBySlug(params.slug);
   if (!page) return {};
 
+  // Strip trailing "| InStoreIndex" from meta_title to avoid duplication
+  // with the layout template ("%s | InStoreIndex")
+  const rawTitle = page.meta_title || page.title;
+  const title = rawTitle.replace(/\s*\|\s*InStoreIndex\s*$/, '');
+
   return {
-    title: page.meta_title || page.title,
+    title,
     description: page.meta_description || page.intro.slice(0, 155),
     alternates: {
       canonical: `https://instoreindex.com/${page.slug}/`,
     },
     openGraph: {
-      title: page.meta_title || page.title,
+      title: rawTitle,
       description: page.meta_description || page.intro.slice(0, 155),
       url: `https://instoreindex.com/${page.slug}/`,
       type: 'article',
@@ -32,7 +37,7 @@ export function generateMetadata({
     },
     twitter: {
       card: 'summary',
-      title: page.meta_title || page.title,
+      title: rawTitle,
       description: page.meta_description || page.intro.slice(0, 155),
     },
   };
@@ -95,6 +100,38 @@ function markdownToHtml(md: string): string {
   html = html.replace(/\n{3,}/g, '\n\n');
 
   return html;
+}
+
+const QA_SLUG_PREFIXES = ['what-is-', 'how-to-', 'is-', 'do-i-', 'are-there-'];
+
+function extractDirectAnswer(page: Page): string | null {
+  if (page.page_type !== 'question') return null;
+  if (!QA_SLUG_PREFIXES.some(pf => page.slug.startsWith(pf))) return null;
+
+  const detailedMatch = page.body_content.match(
+    /## Detailed Answer\n+([\s\S]*?)(?=\n## [A-Z])/
+  ) || page.body_content.match(
+    /## Detailed Answer\n+([\s\S]*)$/
+  );
+  if (!detailedMatch) return null;
+
+  const content = detailedMatch[1].trim();
+
+  // Try to find the first real paragraph (not a heading, bullet, or table row)
+  for (const line of content.split('\n')) {
+    const l = line.trim();
+    if (!l || l.startsWith('#') || l.startsWith('-') || l.startsWith('|') || l.startsWith('*')) continue;
+    return l.replace(/\*\*(.+?)\*\*/g, '$1').replace(/\*(.+?)\*/g, '$1');
+  }
+
+  // Fallback: collect first 2-3 bullet points into a sentence
+  const bullets = content.split('\n')
+    .filter(l => l.trim().startsWith('- '))
+    .slice(0, 3)
+    .map(l => l.trim().replace(/^- /, '').replace(/\*\*(.+?)\*\*/g, '$1').replace(/\*(.+?)\*/g, '$1'));
+  if (bullets.length > 0) return bullets.join('. ') + '.';
+
+  return null;
 }
 
 function getPillarHub(pillar: string): { name: string; url: string } {
@@ -185,6 +222,72 @@ export default function SlugPage({ params }: { params: { slug: string } }) {
   const breadcrumbTrail = getBreadcrumbTrail(page);
   const bodyHtml = markdownToHtml(page.body_content);
   const faqs = page.faq_questions || [];
+  const directAnswer = extractDirectAnswer(page);
+
+  // Build ItemList schema for roundup ("Best Of") pages
+  let itemListSchema: Record<string, unknown> | null = null;
+  if (page.page_type === 'roundup') {
+    const providers = getAllProviders();
+    const providerSlugMap = new Map(providers.map(p => [p.name.toLowerCase(), p.slug]));
+    const ranked = Array.from(
+      page.body_content.matchAll(/^### (\d+)\. (.+)$/gm)
+    ).map(m => ({ position: parseInt(m[1], 10), name: m[2] }));
+
+    if (ranked.length > 0) {
+      itemListSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'ItemList',
+        name: page.h1,
+        url: `https://instoreindex.com/${page.slug}/`,
+        numberOfItems: ranked.length,
+        itemListElement: ranked.map(r => ({
+          '@type': 'ListItem',
+          position: r.position,
+          name: r.name,
+          url: `https://instoreindex.com/${providerSlugMap.get(r.name.toLowerCase()) || r.name.toLowerCase().replace(/\s+/g, '-')}-review/`,
+        })),
+      };
+    }
+  }
+
+  // Build HowTo schema for how-to and guide pages
+  let howToSchema: Record<string, unknown> | null = null;
+  if (page.slug.includes('how-to') || page.slug.endsWith('-guide')) {
+    const headingLevel = page.page_type === 'guide' ? '###' : '##';
+    const pattern = new RegExp(`^${headingLevel} (.+)$`, 'gm');
+    const sections = page.body_content.split(pattern);
+    // sections alternates: [textBefore, heading1, textAfter1, heading2, textAfter2, ...]
+    const steps: { name: string; text: string }[] = [];
+    for (let i = 1; i < sections.length; i += 2) {
+      const name = sections[i].trim();
+      const body = (sections[i + 1] || '').trim();
+      // Get first non-empty, non-heading, non-list line as summary
+      const firstParagraph = body
+        .split('\n')
+        .find(l => l.trim() && !l.startsWith('#') && !l.startsWith('-') && !l.startsWith('|'));
+      if (firstParagraph) {
+        steps.push({
+          name,
+          text: firstParagraph.replace(/\*\*(.+?)\*\*/g, '$1').replace(/\*(.+?)\*/g, '$1').trim(),
+        });
+      }
+    }
+
+    if (steps.length > 0) {
+      howToSchema = {
+        '@context': 'https://schema.org',
+        '@type': 'HowTo',
+        name: page.h1,
+        description: page.meta_description || page.intro.slice(0, 155),
+        step: steps.map((s, i) => ({
+          '@type': 'HowToStep',
+          position: i + 1,
+          name: s.name,
+          text: s.text,
+        })),
+      };
+    }
+  }
 
   const faqSchema = faqs.length > 0 ? {
     "@context": "https://schema.org",
@@ -220,6 +323,8 @@ export default function SlugPage({ params }: { params: { slug: string } }) {
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }} />
       {faqSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />}
+      {itemListSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListSchema) }} />}
+      {howToSchema && <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(howToSchema) }} />}
 
       <article className="max-w-4xl mx-auto px-4 sm:px-6 py-10">
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-gray-600 mb-6">
@@ -244,7 +349,11 @@ export default function SlugPage({ params }: { params: { slug: string } }) {
             <span className="text-xs text-gray-600 uppercase tracking-wide">{middleCrumbs[0]?.name || 'In-Store Media'}</span>
           </div>
           <h1 className="text-2xl sm:text-4xl font-bold text-white leading-tight mb-4">{page.h1}</h1>
-          <div className="text-lg text-gray-300 leading-relaxed border-l-4 border-accent pl-5 py-1">{page.intro}</div>
+          {directAnswer ? (
+            <div className="text-lg text-gray-300 leading-relaxed border-l-4 border-accent pl-5 py-1">{directAnswer}</div>
+          ) : (
+            <div className="text-lg text-gray-300 leading-relaxed border-l-4 border-accent pl-5 py-1">{page.intro}</div>
+          )}
         </header>
 
         <div className="prose-content" dangerouslySetInnerHTML={{ __html: bodyHtml }} />

@@ -19,6 +19,20 @@ export default function GlossaryPage() {
     grouped[letter].push(p);
   }
 
+  const schema = {
+    '@context': 'https://schema.org',
+    '@type': 'DefinedTermSet',
+    name: 'In-Store Media Glossary',
+    url: 'https://instoreindex.com/glossary/',
+    description: metadata.description,
+    hasDefinedTerm: glossary.map((p) => ({
+      '@type': 'DefinedTerm',
+      name: p.h1,
+      description: p.intro,
+      url: `https://instoreindex.com/glossary/#${p.slug}`,
+    })),
+  };
+
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
@@ -29,6 +43,7 @@ export default function GlossaryPage() {
           { "@type": "ListItem", "position": 2, "name": "Glossary" }
         ]
       }) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
       <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-gray-600 mb-6">
           <a href="/" className="hover:text-gray-400 no-underline">Home</a>
@@ -52,7 +67,7 @@ export default function GlossaryPage() {
           <h2 className="text-lg font-bold text-accent mb-4">{letter}</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
             {grouped[letter].map((p) => (
-              <a key={p.slug} href={`/${p.slug}/`} className="block p-3 bg-navy-900 border border-navy-800 rounded-lg hover:border-accent/40 transition-colors no-underline group">
+              <a key={p.slug} id={p.slug} href={`/${p.slug}/`} className="block p-3 bg-navy-900 border border-navy-800 rounded-lg hover:border-accent/40 transition-colors no-underline group scroll-mt-20">
                 <h3 className="text-sm text-white font-medium group-hover:text-accent-light">{p.h1}</h3>
                 <p className="text-xs text-gray-600 mt-1 line-clamp-1">{p.intro.slice(0, 80)}...</p>
               </a>
