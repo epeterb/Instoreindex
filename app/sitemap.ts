@@ -69,7 +69,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   const dynamicPages: MetadataRoute.Sitemap = pages.map((page) => ({
     url: `${BASE_URL}/${page.slug}/`,
-    lastModified: page.updated_at ? page.updated_at.split('T')[0] : undefined,
+    lastModified: page.updated_at ? new Date(page.updated_at) : undefined,
     changeFrequency: 'monthly' as const,
     priority: PAGE_TYPE_PRIORITY[page.page_type] ?? 0.5,
   }));

@@ -10,6 +10,12 @@ export const metadata: Metadata = {
     template: '%s | InStoreIndex',
   },
   description: 'Compare background music providers, digital signage platforms, and retail media networks. Vendor-neutral reviews, pricing, and recommendations for in-store media.',
+  applicationName: 'InStoreIndex',
+  authors: [{ name: 'Peter Belanger', url: 'https://instoreindex.com' }],
+  generator: 'Next.js',
+  keywords: ['background music for business', 'digital signage for retail', 'retail media networks', 'in-store media', 'commercial music licensing', 'B2B reviews'],
+  creator: 'Peter Belanger',
+  publisher: 'InStoreIndex',
   openGraph: {
     type: 'website',
     locale: 'en_US',
@@ -26,6 +32,7 @@ export const metadata: Metadata = {
   robots: {
     index: true,
     follow: true,
+    nocache: false,
     googleBot: {
       index: true,
       follow: true,
