@@ -30,9 +30,8 @@ function main() {
   }
 
   for (const page of pages) {
-    const lastmod = page.updated_at ? page.updated_at.split('T')[0] : today;
     const priority = priorities[page.page_type] || '0.5';
-    xml += `  <url>\n    <loc>https://instoreindex.com/${page.slug}/</loc>\n    <lastmod>${lastmod}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>${priority}</priority>\n  </url>\n`;
+    xml += `  <url>\n    <loc>https://instoreindex.com/${page.slug}/</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>monthly</changefreq>\n    <priority>${priority}</priority>\n  </url>\n`;
   }
 
   xml += '</urlset>\n';

@@ -175,6 +175,22 @@ export function getRelatedPages(page: Page): Page[] {
   return related.slice(0, 5);
 }
 
+let relatedLinksCache: Record<string, string[]> | null = null;
+
+export function getRelatedLinksMap(): Record<string, string[]> {
+  if (relatedLinksCache) return relatedLinksCache;
+  relatedLinksCache = loadJSON<Record<string, string[]>>('related-links.json');
+  return relatedLinksCache;
+}
+
+export function getRelatedPagesFromMap(page: Page): Page[] {
+  const map = getRelatedLinksMap();
+  const slugs = map[page.slug] || [];
+  const allPages = getAllPages();
+  const slugIndex = new Map(allPages.map(p => [p.slug, p]));
+  return slugs.map(s => slugIndex.get(s)).filter((p): p is Page => !!p);
+}
+
 export function getPagesByType(pages: Page[], type: string): Page[] {
   return pages.filter(p => p.page_type === type);
 }

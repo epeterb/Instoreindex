@@ -1,4 +1,4 @@
-import { getAllPages, getAllProviders, getPageBySlug, getRelatedPages, type Page } from "@/lib/data";
+import { getAllPages, getAllProviders, getPageBySlug, getRelatedPagesFromMap, type Page } from "@/lib/data";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
@@ -219,7 +219,7 @@ export default function SlugPage({ params }: { params: { slug: string } }) {
   const page = getPageBySlug(params.slug);
   if (!page) notFound();
 
-  const relatedPages = getRelatedPages(page);
+  const relatedPages = getRelatedPagesFromMap(page);
   const breadcrumbTrail = getBreadcrumbTrail(page);
   const bodyHtml = markdownToHtml(page.body_content);
   const faqs = page.faq_questions || [];
