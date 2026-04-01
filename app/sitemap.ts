@@ -66,13 +66,16 @@ const PAGE_TYPE_PRIORITY: Record<string, number> = {
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const pages = getAllPages();
+  const today = new Date();
+
+  const staticPages = STATIC_PAGES.map((p) => ({ ...p, lastModified: today }));
 
   const dynamicPages: MetadataRoute.Sitemap = pages.map((page) => ({
     url: `${BASE_URL}/${page.slug}/`,
-    lastModified: page.updated_at ? new Date(page.updated_at) : undefined,
+    lastModified: today,
     changeFrequency: 'monthly' as const,
     priority: PAGE_TYPE_PRIORITY[page.page_type] ?? 0.5,
   }));
 
-  return [...STATIC_PAGES, ...dynamicPages];
+  return [...staticPages, ...dynamicPages];
 }
