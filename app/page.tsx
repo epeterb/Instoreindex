@@ -1,4 +1,4 @@
-import { getAllPages, getAllProviders, getPagesByType } from "@/lib/data";
+import { getAllProviders } from "@/lib/data";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,14 +8,7 @@ export const metadata: Metadata = {
 };
 
 export default function HomePage() {
-  const allPages = getAllPages();
   const providers = getAllProviders();
-
-  const guides = getPagesByType(allPages, 'guide').slice(0, 6);
-  const comparisons = getPagesByType(allPages, 'vs').slice(0, 8);
-  const questions = getPagesByType(allPages, 'question').slice(0, 8);
-  const verticals = getPagesByType(allPages, 'vertical').slice(0, 8);
-  const roundups = getPagesByType(allPages, 'roundup').slice(0, 6);
 
   const organizationSchema = {
     '@context': 'https://schema.org',
@@ -29,13 +22,6 @@ export default function HomePage() {
       jobTitle: 'Founder',
       url: 'https://instoreindex.com',
     },
-    knowsAbout: [
-      'background music for business',
-      'digital signage for retail',
-      'retail media networks',
-      'in-store media',
-      'commercial music licensing',
-    ],
   };
 
   const webSiteSchema = {
@@ -45,26 +31,10 @@ export default function HomePage() {
     url: 'https://instoreindex.com',
   };
 
-  const collectionPageSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    name: 'The Buyer\'s Guide to Background Music, Digital Signage & Retail Media Networks',
-  };
-
   return (
     <>
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }}
-      />
-      <script
-        type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionPageSchema) }}
-      />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(webSiteSchema) }} />
 
       {/* Hero */}
       <section className="py-16 sm:py-24 px-4 sm:px-6">
@@ -73,121 +43,73 @@ export default function HomePage() {
             Vendor-Neutral In-Store Media Research
           </p>
           <h1 className="text-3xl sm:text-5xl font-bold text-white leading-tight mb-6">
-            The Buyer&apos;s Guide to Background Music, Digital Signage &amp; Retail Media Networks
+            The Independent Buyer&apos;s Guide to In-Store Media
           </h1>
           <p className="text-lg text-gray-400 max-w-2xl mx-auto mb-10">
-            Compare {providers.length} providers across {allPages.length.toLocaleString()}+ pages of independent research.
-            No ads. No affiliate links. Just the information you need to choose the right in-store media solution.
+            Real pricing. Real tradeoffs. Real opinions on which providers fit which buyers.
+            No ads, no affiliate links, no vendor influence.
           </p>
           <div className="flex flex-wrap gap-3 justify-center">
-            <a href="/complete-guide-background-music-for-business/" className="px-6 py-3 bg-accent hover:bg-accent-dark text-white font-medium rounded-lg transition-colors no-underline">
-              Background Music Guide
+            <a href="/providers/" className="px-6 py-3 bg-accent hover:bg-accent-dark text-white font-medium rounded-lg transition-colors no-underline">
+              Browse Providers
             </a>
-            <a href="/complete-guide-digital-signage-retail/" className="px-6 py-3 bg-navy-800 hover:bg-navy-700 text-white font-medium rounded-lg transition-colors no-underline">
-              Digital Signage Guide
-            </a>
-            <a href="/complete-guide-retail-media-networks-in-store/" className="px-6 py-3 bg-navy-800 hover:bg-navy-700 text-white font-medium rounded-lg transition-colors no-underline">
-              Retail Media Guide
+            <a href="/about/" className="px-6 py-3 bg-navy-800 hover:bg-navy-700 text-white font-medium rounded-lg transition-colors no-underline">
+              About This Guide
             </a>
           </div>
         </div>
       </section>
 
-      {/* Stats bar */}
+      {/* Stats */}
       <section className="border-y border-navy-800 bg-navy-900/50 py-8 px-4">
-        <div className="max-w-6xl mx-auto grid grid-cols-2 md:grid-cols-4 gap-6 text-center">
+        <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
           <div>
             <div className="text-2xl font-bold text-white">{providers.length}</div>
-            <div className="text-sm text-gray-500">Providers Reviewed</div>
+            <div className="text-sm text-gray-500">Providers Tracked</div>
           </div>
           <div>
-            <div className="text-2xl font-bold text-white">{allPages.length.toLocaleString()}+</div>
-            <div className="text-sm text-gray-500">Research Pages</div>
-          </div>
-          <div>
-            <div className="text-2xl font-bold text-white">{getPagesByType(allPages, 'vs').length}</div>
-            <div className="text-sm text-gray-500">Provider Comparisons</div>
+            <div className="text-2xl font-bold text-white">Independent</div>
+            <div className="text-sm text-gray-500">No ads, no affiliates</div>
           </div>
           <div>
             <div className="text-2xl font-bold text-white">3</div>
-            <div className="text-sm text-gray-500">Content Pillars</div>
+            <div className="text-sm text-gray-500">Coverage Areas</div>
           </div>
         </div>
       </section>
 
-      {/* Guides */}
+      {/* What we cover */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16">
-        <h2 className="text-2xl font-bold text-white mb-2">Complete Guides</h2>
-        <p className="text-gray-500 mb-8">Comprehensive guides covering every aspect of in-store media.</p>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {guides.map((page) => (
-            <a key={page.slug} href={`/${page.slug}/`} className="block p-5 bg-navy-900 border border-navy-800 rounded-lg hover:border-accent/40 transition-colors no-underline group">
-              <span className="text-xs font-medium text-accent uppercase tracking-wide">{page.pillar}</span>
-              <h3 className="text-white font-semibold mt-2 mb-2 group-hover:text-accent-light transition-colors">{page.h1}</h3>
-              <p className="text-sm text-gray-500 line-clamp-2">{page.intro.slice(0, 120)}...</p>
-            </a>
-          ))}
+        <h2 className="text-2xl font-bold text-white mb-2">What We Cover</h2>
+        <p className="text-gray-500 mb-8">Independent research across the three pillars of in-store media.</p>
+        <div className="grid md:grid-cols-3 gap-6">
+          <div className="p-6 bg-navy-900 border border-navy-800 rounded-lg">
+            <h3 className="text-white font-semibold text-lg mb-3">Background Music</h3>
+            <p className="text-sm text-gray-500">Commercial licensing, provider pricing, catalog depth, and service model comparisons for retail, hospitality, and food service operators.</p>
+          </div>
+          <div className="p-6 bg-navy-900 border border-navy-800 rounded-lg">
+            <h3 className="text-white font-semibold text-lg mb-3">Digital Signage</h3>
+            <p className="text-sm text-gray-500">Hardware models, software platforms, content management, and pricing structures for single-location operators through enterprise chains.</p>
+          </div>
+          <div className="p-6 bg-navy-900 border border-navy-800 rounded-lg">
+            <h3 className="text-white font-semibold text-lg mb-3">Retail Media Networks</h3>
+            <p className="text-sm text-gray-500">In-store advertising infrastructure, CPM benchmarks, measurement approaches, and the providers building retail media capabilities.</p>
+          </div>
         </div>
       </section>
 
-      {/* Provider Comparisons */}
+      {/* Providers CTA */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16">
-        <h2 className="text-2xl font-bold text-white mb-2">Provider Comparisons</h2>
-        <p className="text-gray-500 mb-8">Head-to-head comparisons of in-store media providers.</p>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
-          {comparisons.map((page) => (
-            <a key={page.slug} href={`/${page.slug}/`} className="block p-4 bg-navy-900 border border-navy-800 rounded-lg hover:border-accent/40 transition-colors no-underline group">
-              <span className="text-xs text-gray-600">Comparison</span>
-              <h3 className="text-sm text-white font-medium mt-1 group-hover:text-accent-light transition-colors">{page.h1.replace(': Which In-Store Media Provider Is Right for You?', '')}</h3>
-            </a>
-          ))}
-        </div>
-        <a href="/providers/" className="inline-block mt-6 text-sm text-accent hover:text-accent-light no-underline">
-          View all {getPagesByType(allPages, 'vs').length} comparisons →
-        </a>
-      </section>
-
-      {/* Roundups */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16">
-        <h2 className="text-2xl font-bold text-white mb-2">Best Of</h2>
-        <p className="text-gray-500 mb-8">Top-rated providers by category and use case.</p>
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {roundups.map((page) => (
-            <a key={page.slug} href={`/${page.slug}/`} className="block p-5 bg-navy-900 border border-navy-800 rounded-lg hover:border-accent/40 transition-colors no-underline group">
-              <span className="text-xs font-medium text-accent uppercase tracking-wide">{page.pillar}</span>
-              <h3 className="text-white font-semibold mt-2 group-hover:text-accent-light transition-colors">{page.h1}</h3>
-            </a>
-          ))}
-        </div>
-      </section>
-
-      {/* Questions */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16">
-        <h2 className="text-2xl font-bold text-white mb-2">Common Questions</h2>
-        <p className="text-gray-500 mb-8">Answers to the most-asked questions about in-store media.</p>
-        <div className="grid md:grid-cols-2 gap-3">
-          {questions.map((page) => (
-            <a key={page.slug} href={`/${page.slug}/`} className="flex items-start gap-3 p-4 bg-navy-900 border border-navy-800 rounded-lg hover:border-accent/40 transition-colors no-underline group">
-              <span className="text-accent mt-0.5 shrink-0">?</span>
-              <div>
-                <h3 className="text-sm text-white font-medium group-hover:text-accent-light transition-colors">{page.h1}</h3>
-                <p className="text-xs text-gray-600 mt-1 line-clamp-1">{page.intro.slice(0, 100)}...</p>
-              </div>
-            </a>
-          ))}
-        </div>
-      </section>
-
-      {/* Industry Pages */}
-      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16">
-        <h2 className="text-2xl font-bold text-white mb-2">By Industry</h2>
-        <p className="text-gray-500 mb-8">In-store media solutions tailored to your business type.</p>
-        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-3">
-          {verticals.map((page) => (
-            <a key={page.slug} href={`/${page.slug}/`} className="block p-4 bg-navy-900 border border-navy-800 rounded-lg hover:border-accent/40 transition-colors no-underline group">
-              <h3 className="text-sm text-white font-medium group-hover:text-accent-light transition-colors">{page.h1}</h3>
-            </a>
-          ))}
+        <div className="bg-navy-900 border border-navy-800 rounded-xl p-8 md:p-12 text-center">
+          <h2 className="text-2xl font-bold text-white mb-4">
+            {providers.length} Providers. Independently Evaluated.
+          </h2>
+          <p className="text-gray-400 max-w-xl mx-auto mb-8">
+            From Mood Media and Stingray to QSIC and MTI Digital — every major in-store media provider profiled with real pricing research, genuine strengths, genuine weaknesses, and a clear verdict.
+          </p>
+          <a href="/providers/" className="inline-block px-8 py-4 bg-accent hover:bg-accent-dark text-white font-medium rounded-lg transition-colors no-underline">
+            View All Providers →
+          </a>
         </div>
       </section>
 
