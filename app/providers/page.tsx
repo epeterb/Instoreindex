@@ -1,148 +1,232 @@
-import { getAllPages, getAllProviders, getPagesByType } from "@/lib/data";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: 'In-Store Media Providers — Compare All Providers',
-  description: 'Compare background music, digital signage, and retail media providers. Head-to-head comparisons, reviews, pricing, and alternatives.',
-  alternates: { canonical: 'https://instoreindex.com/providers/' },
+  title: "In-Store Media Providers — Independent Reviews | InStoreIndex",
+  description:
+    "Independent research on 11 providers across background music, digital signage, and retail media networks. Full profiles, head-to-head comparisons, and market pricing research.",
+  alternates: { canonical: "https://instoreindex.com/providers/" },
+};
+
+const providers = [
+  {
+    name: "Activaire",
+    slug: "activaire",
+    tagline: "Brooklyn-based sound agency. Human curation, 43 countries, clients including Uniqlo and Eaton Hotels.",
+  },
+  {
+    name: "Altaura",
+    slug: "altaura",
+    tagline: "London and Santa Monica consultancy. Sonic identity for luxury hospitality and retail. Clients include Coach and Four Seasons.",
+  },
+  {
+    name: "Jukeboxy",
+    slug: "jukeboxy",
+    tagline: "New York-based mid-market platform for US and Canada. 45M+ tracks, honest pricing, seven-day human support.",
+  },
+  {
+    name: "Mood Media",
+    slug: "mood-media",
+    tagline: "The largest in-store media provider globally. 100,000+ locations, 140 countries, PE-owned since 2020.",
+  },
+  {
+    name: "MTI Digital",
+    slug: "mti",
+    tagline: "Family-owned since 1988. Human-curated programming, dedicated account management, Detroit-headquartered.",
+  },
+  {
+    name: "QSIC",
+    slug: "qsic",
+    tagline: "Retail media infrastructure using audio as the delivery channel. Powers 7-Eleven Gulp Radio.",
+  },
+  {
+    name: "Rockbot",
+    slug: "rockbot",
+    tagline: "Google-backed unified media platform. Enterprise controls at self-serve pricing. Walmart and Planet Fitness.",
+  },
+  {
+    name: "SiriusXM Business Suite",
+    slug: "siriusxm-business",
+    tagline: "Three B2B products under one public parent. Pandora CloudCover from $16.95/month. Dunkin' and Amazon One Medical.",
+  },
+  {
+    name: "SoundMachine",
+    slug: "soundmachine",
+    tagline: "61M+ track catalog, scheduling precision, no proprietary hardware. Self-serve for US, Canada, Japan.",
+  },
+  {
+    name: "Soundtrack Your Brand",
+    slug: "soundtrack-your-brand",
+    tagline: "Spotify-backed Stockholm platform. Largest commercially licensed catalog at 100M+ tracks, 74 countries.",
+  },
+  {
+    name: "Stingray",
+    slug: "stingray",
+    tagline: "Publicly traded Montreal-based media conglomerate. Largest US retail audio advertising network at 33,500+ locations.",
+  },
+];
+
+const comparisons = [
+  {
+    title: "MTI Digital vs. Mood Media",
+    slug: "mti-vs-mood-media",
+    tagline: "Family-owned boutique vs. global enterprise scale. Which is right for your chain?",
+  },
+  {
+    title: "MTI Digital vs. Rockbot",
+    slug: "mti-vs-rockbot",
+    tagline: "Dedicated account model vs. software platform. Different buyers, different products.",
+  },
+];
+
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  name: "In-Store Media Providers",
+  url: "https://instoreindex.com/providers/",
+  description:
+    "Independent research on 11 providers across background music, digital signage, and retail media networks.",
+  mainEntity: {
+    "@type": "ItemList",
+    numberOfItems: providers.length,
+    itemListElement: providers.map((p, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: p.name,
+      url: `https://instoreindex.com/analysis/${p.slug}/`,
+    })),
+  },
+};
+
+const breadcrumbLd = {
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  itemListElement: [
+    { "@type": "ListItem", position: 1, name: "Home", item: "https://instoreindex.com/" },
+    { "@type": "ListItem", position: 2, name: "Providers" },
+  ],
 };
 
 export default function ProvidersPage() {
-  const allPages = getAllPages();
-  const providers = getAllProviders();
-  const comparisons = getPagesByType(allPages, 'vs');
-  const profiles = getPagesByType(allPages, 'provider_profile');
-  const alternatives = getPagesByType(allPages, 'alternatives');
-  const pricing = getPagesByType(allPages, 'pricing');
-  const providerVerticals = getPagesByType(allPages, 'provider_vertical');
-  const providerServices = getPagesByType(allPages, 'provider_service');
-
-  const allLinkedPages = [...profiles, ...comparisons, ...alternatives, ...pricing, ...providerVerticals, ...providerServices];
-  const schema = {
-    '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    name: 'In-Store Media Providers',
-    url: 'https://instoreindex.com/providers/',
-    description: metadata.description,
-    mainEntity: {
-      '@type': 'ItemList',
-      numberOfItems: allLinkedPages.length,
-      itemListElement: allLinkedPages.map((p, i) => ({
-        '@type': 'ListItem',
-        position: i + 1,
-        name: p.h1,
-        url: `https://instoreindex.com/${p.slug}/`,
-      })),
-    },
-  };
-
   return (
     <>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify({
-        "@context": "https://schema.org",
-        "@type": "BreadcrumbList",
-        "itemListElement": [
-          { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://instoreindex.com/" },
-          { "@type": "ListItem", "position": 2, "name": "Providers" }
-        ]
-      }) }} />
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }} />
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12">
-        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-gray-600 mb-6">
-          <a href="/" className="hover:text-gray-400 no-underline">Home</a>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+
+      <main className="max-w-5xl mx-auto px-4 sm:px-6 py-12">
+
+        <nav aria-label="Breadcrumb" className="flex items-center gap-2 text-sm text-gray-400 mb-6">
+          <a href="/" className="hover:text-white no-underline">Home</a>
           <span>/</span>
-          <span className="text-gray-400">Providers</span>
+          <span className="text-gray-300">Providers</span>
         </nav>
-        <h1 className="text-3xl font-bold text-white mb-2">In-Store Media Providers</h1>
-      <p className="text-gray-400 mb-10">Independent research on {providers.length} providers across background music, digital signage, and retail media networks.</p>
 
-      {/* Provider Profiles */}
-      <section className="mb-12">
-        <h2 className="text-xl font-bold text-white mb-6">Provider Reviews</h2>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {providers.map((p) => {
-            const profilePage = profiles.find(pg => pg.slug === `${p.slug}-review`);
-            return (
-              <div key={p.slug} className="p-5 bg-navy-900 border border-navy-800 rounded-lg">
-                <h3 className="text-white font-semibold">{p.name}</h3>
-                <p className="text-xs text-gray-500 mt-1">{p.headquarters || 'Global'} · {(p.company_size || 'various').charAt(0).toUpperCase() + (p.company_size || 'various').slice(1)}</p>
-                <p className="text-sm text-gray-400 mt-2 line-clamp-2">{p.key_differentiator || p.description?.slice(0, 100)}</p>
-                <div className="flex gap-2 mt-3">
-                  {profilePage && (
-                    <a href={`/${profilePage.slug}/`} className="text-xs text-accent hover:text-accent-light no-underline">Full Review →</a>
-                  )}
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      </section>
+        <header className="mb-12">
+          <p className="text-sm font-medium text-gray-400 uppercase tracking-widest mb-2">
+            Independent Research
+          </p>
+          <h1 className="text-4xl mb-4">In-Store Media Providers</h1>
+          <p className="text-xl text-gray-100 leading-relaxed max-w-3xl">
+            Independent profiles of 11 providers across background music,
+            digital signage, and retail media networks. No vendor
+            relationships. No affiliate links. No pay-to-play rankings.
+          </p>
+        </header>
 
-      {/* Comparisons */}
-      <section className="mb-12">
-        <h2 className="text-xl font-bold text-white mb-2">Head-to-Head Comparisons</h2>
-        <p className="text-gray-500 mb-6">{comparisons.length} provider comparisons</p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {comparisons.map((page) => (
-            <a key={page.slug} href={`/${page.slug}/`} className="block p-3 bg-navy-900 border border-navy-800 rounded-lg hover:border-accent/40 transition-colors no-underline group">
-              <h3 className="text-sm text-white font-medium group-hover:text-accent-light transition-colors">
-                {page.h1.replace(': Which In-Store Media Provider Is Right for You?', '')}
-              </h3>
-            </a>
-          ))}
-        </div>
-      </section>
+        <section className="mb-16">
+          <h2 className="text-2xl font-semibold text-white mb-2">
+            Provider Reviews
+          </h2>
+          <p className="text-gray-400 mb-6">
+            Full independent profiles of every provider we track. Company
+            background, pricing research, strengths, weaknesses, and verdict.
+          </p>
 
-      {/* Alternatives & Pricing */}
-      <div className="grid md:grid-cols-2 gap-8">
-        <section>
-          <h2 className="text-xl font-bold text-white mb-4">Alternatives</h2>
-          <div className="space-y-2">
-            {alternatives.map((page) => (
-              <a key={page.slug} href={`/${page.slug}/`} className="block p-3 bg-navy-900 border border-navy-800 rounded-lg hover:border-accent/40 transition-colors no-underline group">
-                <h3 className="text-sm text-white font-medium group-hover:text-accent-light">{page.h1}</h3>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {providers.map((p) => (
+              
+                key={p.slug}
+                href={`/analysis/${p.slug}/`}
+                className="block p-5 bg-navy-900 border border-navy-800 rounded-lg hover:border-accent/50 transition-colors no-underline group"
+              >
+                <h3 className="text-white font-semibold group-hover:text-accent-light transition-colors">
+                  {p.name}
+                </h3>
+                <p className="text-sm text-gray-400 mt-2 leading-relaxed">
+                  {p.tagline}
+                </p>
+                <p className="text-xs text-accent mt-3 group-hover:text-accent-light transition-colors">
+                  Full profile →
+                </p>
               </a>
             ))}
           </div>
         </section>
-        <section>
-          <h2 className="text-xl font-bold text-white mb-4">Pricing Guides</h2>
-          <div className="space-y-2">
-            {pricing.map((page) => (
-              <a key={page.slug} href={`/${page.slug}/`} className="block p-3 bg-navy-900 border border-navy-800 rounded-lg hover:border-accent/40 transition-colors no-underline group">
-                <h3 className="text-sm text-white font-medium group-hover:text-accent-light">{page.h1}</h3>
+
+        <section className="mb-16">
+          <h2 className="text-2xl font-semibold text-white mb-2">
+            Head-to-Head Comparisons
+          </h2>
+          <p className="text-gray-400 mb-6">
+            The comparisons real buyers make, with a position taken on each.
+          </p>
+
+          <div className="grid sm:grid-cols-2 gap-4">
+            {comparisons.map((c) => (
+              
+                key={c.slug}
+                href={`/analysis/${c.slug}/`}
+                className="block p-5 bg-navy-900 border border-navy-800 rounded-lg hover:border-accent/50 transition-colors no-underline group"
+              >
+                <h3 className="text-white font-semibold group-hover:text-accent-light transition-colors">
+                  {c.title}
+                </h3>
+                <p className="text-sm text-gray-400 mt-2 leading-relaxed">
+                  {c.tagline}
+                </p>
+                <p className="text-xs text-accent mt-3 group-hover:text-accent-light transition-colors">
+                  Read comparison →
+                </p>
               </a>
             ))}
           </div>
         </section>
-      </div>
 
-      {/* Provider by Industry */}
-      <section className="mb-12 mt-12">
-        <h2 className="text-xl font-bold text-white mb-2">Providers by Industry</h2>
-        <p className="text-gray-500 mb-6">{providerVerticals.length} industry-specific provider guides</p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {providerVerticals.map((page) => (
-            <a key={page.slug} href={`/${page.slug}/`} className="block p-3 bg-navy-900 border border-navy-800 rounded-lg hover:border-accent/40 transition-colors no-underline group">
-              <h3 className="text-sm text-white font-medium group-hover:text-accent-light">{page.h1}</h3>
-            </a>
-          ))}
-        </div>
-      </section>
+        <section className="mb-12">
+          <h2 className="text-2xl font-semibold text-white mb-2">
+            Related Research
+          </h2>
+          <p className="text-gray-400 mb-6">
+            Original market research that supports the provider reviews.
+          </p>
 
-      {/* Provider Services */}
-      <section className="mb-12">
-        <h2 className="text-xl font-bold text-white mb-2">Provider Services</h2>
-        <p className="text-gray-500 mb-6">Detailed breakdowns of services offered by each provider.</p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-3">
-          {providerServices.map((page) => (
-            <a key={page.slug} href={`/${page.slug}/`} className="block p-3 bg-navy-900 border border-navy-800 rounded-lg hover:border-accent/40 transition-colors no-underline group">
-              <h3 className="text-sm text-white font-medium group-hover:text-accent-light">{page.h1}</h3>
-            </a>
-          ))}
-        </div>
-      </section>
-    </div>
+          
+            href="/research/background-music-pricing/"
+            className="block p-5 bg-navy-900 border border-navy-800 rounded-lg hover:border-accent/50 transition-colors no-underline group max-w-2xl"
+          >
+            <p className="text-xs font-medium text-gray-400 uppercase tracking-widest mb-1">
+              Original Research
+            </p>
+            <h3 className="text-white font-semibold group-hover:text-accent-light transition-colors">
+              What Background Music Really Costs in 2026
+            </h3>
+            <p className="text-sm text-gray-400 mt-2 leading-relaxed">
+              A vendor-neutral look at per-location pricing, hardware
+              economics, and contract mechanics across 11 commercial music
+              providers.
+            </p>
+            <p className="text-xs text-accent mt-3 group-hover:text-accent-light transition-colors">
+              Read the research →
+            </p>
+          </a>
+        </section>
+
+      </main>
     </>
   );
 }
