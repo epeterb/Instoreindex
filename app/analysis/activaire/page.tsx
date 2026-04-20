@@ -56,13 +56,11 @@ export default function ActivaireProfilePage() {
       <main className="max-w-3xl mx-auto px-4 py-12">
 
         <header className="mb-10">
-          <p className="text-sm font-medium text-gray-500 uppercase tracking-widest mb-2">
+          <p className="text-sm font-medium text-gray-400 uppercase tracking-widest mb-2">
             Provider Profile
           </p>
-          <h1 className="text-4xl font-bold text-gray-900 mb-4">
-            Activaire
-          </h1>
-          <p className="text-xl text-gray-700 leading-relaxed italic">
+          <h1 className="text-4xl mb-4">Activaire</h1>
+          <p className="text-xl text-gray-100 leading-relaxed italic">
             Activaire is what you get when a company spends twenty-plus years in
             one neighborhood, one industry, and one discipline without drifting.
             Based in Williamsburg, Brooklyn, built on human curation, operating
@@ -72,44 +70,36 @@ export default function ActivaireProfilePage() {
           </p>
         </header>
 
-        <hr className="border-gray-200 mb-10" />
+        <div className="prose-content">
 
-        <section className="mb-10">
-          <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">
-            Company Overview
-          </h2>
-          <p className="text-gray-800 leading-relaxed mb-4">
+          <h2>Company overview</h2>
+          <p>
             Founded in Brooklyn, New York. CEO Adesh Deosaran has led the
             company through a consistent positioning: human curation as a
             differentiator in a market moving toward algorithms. Activaire
-            operates in 43 countries, a meaningful international footprint for a
-            company of its size. The Williamsburg roots are not incidental
+            operates in 43 countries, a meaningful international footprint for
+            a company of its size. The Williamsburg roots are not incidental
             branding. The company has operated in one of the most musically
             sophisticated neighborhoods in the United States for over two
             decades, and that context shapes its curatorial sensibility.
           </p>
-          <p className="text-gray-800 leading-relaxed">
-            Activaire has built hardware partnerships with Marshall speakers and
-            Q-SYS, and integrates natively with Sonos, giving buyers flexibility
-            in how they deploy the service across their physical infrastructure.
+          <p>
+            Activaire has built hardware partnerships with Marshall speakers
+            and Q-SYS, and integrates natively with Sonos, giving buyers
+            flexibility in how they deploy the service across their physical
+            infrastructure.
           </p>
-        </section>
 
-        <hr className="border-gray-200 mb-10" />
-
-        <section className="mb-10">
-          <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">
-            What They Sell
-          </h2>
-          <p className="text-gray-800 leading-relaxed mb-4">
+          <h2>What they sell</h2>
+          <p>
             Curated background music for commercial environments, delivered
             through the Activaire Curator platform. Over 1,000 playlists and
-            scenes organized by business type, mood, and time of day. Dayparting
-            and scheduling are built in. Local playback capability ensures music
-            continues even during internet outages, a meaningful operational
-            advantage over pure streaming services.
+            scenes organized by business type, mood, and time of day.
+            Dayparting and scheduling are built in. Local playback capability
+            ensures music continues even during internet outages, a meaningful
+            operational advantage over pure streaming services.
           </p>
-          <p className="text-gray-800 leading-relaxed">
+          <p>
             The curation model is human-first: Activaire&apos;s music team
             builds and maintains programs for each client rather than deploying
             algorithmic playlists. Custom Audio Branding is available for Pro
@@ -117,47 +107,29 @@ export default function ActivaireProfilePage() {
             identity specific to the brand. Licensing covers ASCAP, BMI, SESAC,
             GMR, and SoundExchange in the US.
           </p>
-        </section>
 
-        <hr className="border-gray-200 mb-10" />
-
-        <section className="mb-10">
-          <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">
-            Pricing
-          </h2>
-          <p className="text-gray-800 leading-relaxed">
+          <h2>Pricing</h2>
+          <p>
             Activaire does not publish pricing. Engagements are scoped through
             direct conversation with their team, reflecting the consultative
             model of the business.
           </p>
-        </section>
 
-        <hr className="border-gray-200 mb-10" />
-
-        <section className="mb-10">
-          <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">
-            Who They&apos;re Best For
-          </h2>
-          <p className="text-gray-800 leading-relaxed">
+          <h2>Who they&apos;re best for</h2>
+          <p>
             Hospitality and retail brands for whom the in-store sound is part
             of the product, not background noise. Hotels, boutique retailers,
             fashion brands, and restaurant groups where the programming needs
             to reflect a specific aesthetic and evolve alongside the brand.
             Buyers who want a music team they can actually talk to, who know
-            their account, and who treat music as a craft rather than a content
-            category. International operators benefit from Activaire&apos;s
-            43-country footprint and licensing coverage.
+            their account, and who treat music as a craft rather than a
+            content category. International operators benefit from
+            Activaire&apos;s 43-country footprint and licensing coverage.
           </p>
-        </section>
 
-        <hr className="border-gray-200 mb-10" />
-
-        <section className="mb-10">
-          <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">
-            Considerations by Buyer Type
-          </h2>
-          <p className="text-gray-800 leading-relaxed mb-4">
-            <strong className="font-semibold">
+          <h2>Considerations by buyer type</h2>
+          <p>
+            <strong>
               Buyers who want published pricing and self-serve onboarding.
             </strong>{" "}
             Activaire is a relationship-based service. There is no self-serve
@@ -165,60 +137,42 @@ export default function ActivaireProfilePage() {
             without a vendor conversation should look at Rockbot, Soundtrack
             Your Brand, or Pandora CloudCover.
           </p>
-          <p className="text-gray-800 leading-relaxed">
-            <strong className="font-semibold">
-              Very large enterprise chains.
-            </strong>{" "}
-            Activaire&apos;s strength is in quality and relationship, not
-            operational scale at the level of Mood or Stingray. Buyers with
-            1,000-plus locations who need standardized, high-volume deployment
-            should evaluate whether the boutique model fits their operational
-            reality.
+          <p>
+            <strong>Very large enterprise chains.</strong> Activaire&apos;s
+            strength is in quality and relationship, not operational scale at
+            the level of Mood or Stingray. Buyers with 1,000-plus locations
+            who need standardized, high-volume deployment should evaluate
+            whether the boutique model fits their operational reality.
           </p>
-        </section>
 
-        <hr className="border-gray-200 mb-10" />
-
-        <section className="mb-10">
-          <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">
-            Notable Clients and Track Record
-          </h2>
-          <p className="text-gray-800 leading-relaxed">
-            Uniqlo US since their first SoHo location. Eaton Hotels. The Uniqlo
-            relationship is particularly notable: the in-store music program
-            has become culturally recognized as a genre unto itself, with
-            listeners independently describing music they enjoy as sounding
-            like &ldquo;Uniqlo music.&rdquo; That is a branding outcome, not
-            just a music service outcome.
+          <h2>Notable clients and track record</h2>
+          <p>
+            Uniqlo US since their first SoHo location. Eaton Hotels. The
+            Uniqlo relationship is particularly notable: the in-store music
+            program has become culturally recognized as a genre unto itself,
+            with listeners independently describing music they enjoy as
+            sounding like &ldquo;Uniqlo music.&rdquo; That is a branding
+            outcome, not just a music service outcome.
           </p>
-        </section>
 
-        <hr className="border-gray-200 mb-10" />
+          <h2>The verdict</h2>
+          <p>
+            Activaire operates in a different category from every other
+            provider on this list. It is not a music service you subscribe to.
+            It is a creative agency you engage to build a sonic identity. For
+            the right buyer, that distinction is the point. For most buyers
+            evaluating in-store music providers, Activaire is not the right
+            comparison.
+          </p>
 
-        <section className="mb-10">
-          <h2 className="text-xs font-semibold text-gray-500 uppercase tracking-widest mb-3">
-            The Verdict
-          </h2>
-          <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-            <p className="text-gray-800 leading-relaxed">
-              Activaire operates in a different category from every other
-              provider on this list. It is not a music service you subscribe to.
-              It is a creative agency you engage to build a sonic identity. For
-              the right buyer, that distinction is the point. For most buyers
-              evaluating in-store music providers, Activaire is not the right
-              comparison.
-            </p>
-          </div>
-        </section>
+        </div>
 
-        <hr className="border-gray-200 mb-10" />
-
-        <footer className="text-sm text-gray-500">
+        <footer className="mt-12 pt-8 border-t border-navy-700 text-sm text-gray-400">
           <p>
             InStoreIndex is an independent buyer&apos;s guide. We are not
             affiliated with Activaire and do not receive compensation for
             provider profiles.{" "}
-            <a href="/about/" className="underline hover:text-gray-700">
+            <a href="/about/" className="underline">
               About our methodology.
             </a>
           </p>
