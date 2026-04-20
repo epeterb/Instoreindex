@@ -126,16 +126,15 @@ export default function MTIvsRockbotComparison() {
               not.
             </li>
             <li>
-              <strong>Buyers who have been burned by large providers</strong>{" "}
+<strong>Buyers who have been burned by large providers</strong>{" "}
               and are specifically looking for a smaller shop with direct
-              account ownership. MTI&apos;s &ldquo;never lost a customer in
-              35+ years&rdquo; claim deserves independent scrutiny, but the
-              structural reason it is plausible is real: a family-run
-              company with concentrated clients has every incentive to keep
-              each one.
-            </li>
+              account ownership. MTI&apos;s industry-leading retention
+              record is consistent with how the company is structured: a
+              family-run provider with concentrated revenue cannot afford
+              to lose clients, and every incentive aligns around keeping
+              them.            </li>
             <li>
-              <strong>Chains in the 50&ndash;500 location range</strong>{" "}
+              <strong>Chains in the 50&ndash;1500 location range</strong>{" "}
               that want enterprise-grade service without being the smallest
               client at Mood Media or the 49,000th customer at Rockbot.
             </li>
