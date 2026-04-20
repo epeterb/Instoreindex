@@ -3,7 +3,7 @@ import { Metadata } from 'next';
 export const metadata: Metadata = {
   title: 'QSIC Review: In-Store Audio as Retail Media Infrastructure | InStoreIndex',
   description:
-    'Independent analysis of QSIC, a retail media infrastructure company using in-store audio as the delivery channel. Powers 7-Eleven Gulp Radio, with $50M in funding and named clients including Coles Express and McDonald&rsquo;s.',
+    'Independent analysis of QSIC, a retail media infrastructure company using in-store audio as the delivery channel. Powers 7-Eleven Gulp Radio, with $50M in funding and named clients including Coles Express and McDonalds.',
   alternates: {
     canonical: 'https://instoreindex.com/analysis/qsic/',
   },
@@ -129,8 +129,80 @@ export default function QsicProfile() {
         </section>
 
         <section className="mb-10">
-          <h2 className="text-2xl font-bold mb-4">Who they&rsquo;re best for</h2>
+          <h2 className="text-2xl font-bold mb-4">Who theyre best for</h2>
           <p className="leading-relaxed">
             Enterprise retailers and QSR chains with large, high-traffic domestic footprints
             who are actively building or planning a retail media strategy. The buyer profile is
-            not a facilities dir
+            not a facilities director looking for background music. It is a VP of retail media
+            or a chief revenue officer asking how to monetize physical store traffic the way
+            digital properties monetize web traffic. Convenience chains, grocery operators,
+            QSRs, and fuel retailers are QSICs natural verticals.
+          </p>
+        </section>
+
+        <section className="mb-10">
+          <h2 className="text-2xl font-bold mb-4">Considerations by buyer type</h2>
+          <h3 className="text-xl font-semibold mb-2 mt-6">
+            Buyers whose primary need is music, not media
+          </h3>
+          <p className="mb-4 leading-relaxed">
+            If your organization needs a licensed background music program with no current
+            interest in retail media monetization, QSIC is a more complex and likely more
+            expensive solution than the need requires.
+          </p>
+          <h3 className="text-xl font-semibold mb-2 mt-6">Smaller operators</h3>
+          <p className="mb-4 leading-relaxed">
+            QSICs retail media model requires meaningful location scale to make the
+            economics work for advertisers. Single-location and small chain operators are not
+            the target.
+          </p>
+          <h3 className="text-xl font-semibold mb-2 mt-6">
+            Buyers outside QSICs current geographic focus
+          </h3>
+          <p className="leading-relaxed">
+            QSIC is expanding aggressively in North America with Australian market presence.
+            Buyers in other markets should verify current coverage before engaging.
+          </p>
+        </section>
+
+        <section className="mb-10">
+          <h2 className="text-2xl font-bold mb-4">Notable clients and track record</h2>
+          <p className="leading-relaxed">
+            7-Eleven, Coles Express, and McDonalds are among QSICs publicly named
+            clients. The Gulp Radio deployment targeting full rollout across 12,000 stores is
+            the companys most visible proof point. QSIC now reaches more than 350
+            million in-store shoppers monthly following the Barrows Connected Store partnership
+            announced in March 2026.
+          </p>
+        </section>
+
+        <section className="mb-10">
+          <h2 className="text-2xl font-bold mb-4">The verdict</h2>
+          <div className="border-l-4 border-gray-300 pl-6 py-2">
+            <p className="leading-relaxed">
+              QSIC is the most strategically interesting company in the in-store media segment
+              right now. The retail media network model is where the industry is heading, and
+              QSIC is further down that road than any other pure-play in-store audio provider.
+              For the right buyer, an enterprise retailer with a serious retail media agenda
+              and a large domestic footprint, the conversation with QSIC is not about whether
+              they have a good music catalog. It is about whether you want to turn your store
+              network into an advertising asset. For buyers whose current priority is reliable
+              background music at a predictable monthly cost, QSIC is solving a different
+              problem than the one you have.
+            </p>
+          </div>
+        </section>
+
+        <footer className="mt-12 pt-8 border-t border-gray-200 text-sm text-gray-600">
+          <p>
+            Related reading: our full{' '}
+            <a href="/analysis/stingray/" className="underline">Stingray profile</a>,{' '}
+            <a href="/analysis/rockbot/" className="underline">Rockbot profile</a>, and the{' '}
+            <a href="/research/background-music-pricing/" className="underline">background music pricing research</a>.
+          </p>
+          <p className="mt-4">Last updated: April 19, 2026.</p>
+        </footer>
+      </article>
+    </>
+  );
+}
