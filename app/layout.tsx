@@ -45,10 +45,10 @@ export const metadata: Metadata = {
 
 const navLinks = [
   { href: '/background-music/', label: 'Music' },
-  { href: '/digital-signage/', label: 'Signage' },
-  { href: '/retail-media-networks/', label: 'RMN' },
   { href: '/providers/', label: 'Providers' },
-  { href: '/guides/', label: 'Guides' },
+  // TODO: restore Signage, RMN, Guides nav items once those landing pages have real content.
+  // See isi-2-notes-and-thoughts.md section "Deferred from nav (April 20, 2026)".
+  // Pages still exist at /digital-signage/, /retail-media-networks/, /guides/ but render empty.
 ];
 
 export default function RootLayout({
