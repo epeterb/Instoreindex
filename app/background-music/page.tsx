@@ -29,7 +29,7 @@ const collectionLd = {
 
 export default function BackgroundMusicHub() {
   return (
-    <>
+    <div>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
@@ -186,6 +186,6 @@ export default function BackgroundMusicHub() {
         </section>
 
       </main>
-    </>
+    </div>
   );
 }
