@@ -106,7 +106,7 @@ const breadcrumbLd = {
   ],
 };
 
-export default function ProvidersPage() {
+export default function ProvidersPage(): JSX.Element {
   return (
     <>
       <script
